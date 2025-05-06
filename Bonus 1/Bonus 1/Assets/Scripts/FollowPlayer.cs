@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
@@ -13,20 +14,25 @@ public class FollowPlayer : MonoBehaviour
     }
 
     // Update is called once per frame
-    public bool Nappi = false;
-    public GameObject player;
-    private Vector3 ensimmäinen = new Vector3(0, 7, 0);
-    private Vector3 kolmas = new Vector3(0, 7, -10);
-    void LateUpdate()
+    public Camera ensimmäinen;
+    public Camera kolmas;
+    private bool onkoKolmas = true;
+    void Update()
     {
-        if (Input.GetButton("V")){
-            Nappi = !Nappi;
+        if (Input.GetKeyDown(KeyCode.V)){
+            Debug.Log("Nappi");
+            KameraVaihto();
         }
-        if (Nappi == false){
-            transform.position = player.transform.position + kolmas;
-        }
-        else { 
-            transform.position = player.transform.position + ensimmäinen;
+    }
+    void KameraVaihto(){
+        if (onkoKolmas){
+            Debug.Log("Ensimmäinen");
+            ensimmäinen.gameObject.SetActive(true);
+            kolmas.gameObject.SetActive(false);
+        }else{
+            Debug.Log("Kolmas");
+            ensimmäinen.gameObject.SetActive(false);
+            kolmas.gameObject.SetActive(true);
         }
     }
 }
